@@ -1,0 +1,45 @@
+<div class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/fundo.png')] text-white flex flex-col items-center justify-start p-4 space-y-4">
+
+    <h1 class="text-base font-bold text-center">
+        🔥 MELHORES PROMOÇÕES PARA O BRASIL 🔥
+    </h1>
+    <p class="text-xs text-center font-serif font-normal">CUPONS E OFERTAS DAS GRANDES LOJAS DO BRASIL</p>
+
+    <div class="lg:w-[20%] w-[80%] rounded-2xl overflow-hidden shadow-lg">
+        <img src="assets/img/sergipe-promocao.jpg" alt="Promoção Sergipe" class="w-full object-cover" />
+    </div>
+
+    <!-- @if (usuarioSistemaDto()) {
+    } -->
+    <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''" target="_blank"
+        class="animate-pulseButton bg-[#68c632] hover:bg-green-600 text-white font-semibold py-6 px-6 rounded-2xl text-center w-full max-w-sm text-sm">
+        PARTICIPAR DO GRUPO NO WHATSAPP
+    </a>
+
+    <div class="flex items-center justify-center gap-2">
+        <img class="w-7 h-7 rounded-full" src="assets/img/seta.png" alt="Seta">
+        <p class="text-center font-serif text-sm">Economize com as nossas Notificações</p>
+        <img class="w-7 h-7 rounded-full" src="assets/img/seta.png" alt="Seta">
+    </div>
+
+    <div>
+        <p class="font-bold text-2xl">{{ vagas }} Vagas Disponíveis</p>
+    </div>
+
+    <div class="text-center mt-4">
+        <h2 class="font-semibold font-serif text-base">Ofertas mais cupom tem Parceria Com</h2>
+        <div class="flex flex-wrap justify-center items-center gap-4 mt-2">
+            <img src="assets/img/mercado.png" class="h-8 rounded-md" alt="Mercado Livre" />
+            <img src="assets/img/magalu.png" class="h-8 rounded-md" alt="Magalu" />
+            <img src="assets/img/amazon.png" class="h-8 rounded-md" alt="Amazon" />
+            <img src="assets/img/shopee.png" class="h-8 rounded-md" alt="Shopee" />
+            <img src="assets/img/boti.png" class="h-8 rounded-md" alt="O Boticário" />
+            <img src="assets/img/nike.png" class="h-8 rounded-md" alt="Nike" />
+            <img src="assets/img/casas.png" class="h-8 rounded-md" alt="Casas Bahia" />
+        </div>
+    </div>
+
+    <footer class="text-center font-serif text-xs text-white mt-6">
+        Direitos Reservados &#64;ofertasmaiscupom
+    </footer>
+</div>

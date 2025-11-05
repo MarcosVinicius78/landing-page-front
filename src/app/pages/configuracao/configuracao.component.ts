@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SistemaDto, SistemaService } from '../../shared/service/sistema.service';
 import { UsuarioSistemaDto } from '../../shared/service/usuario-sistema/models/usuario-sistema-dto';
@@ -14,13 +14,15 @@ import { UsuarioSistemaForm } from '../../shared/service/usuario-sistema/models/
 export class ConfiguracaoComponent implements OnInit {
 
   sistemasDto: SistemaDto[] = [];
+  sistemasSelecionadoDto!: SistemaDto;
   sistemaSelecionadoId: number | null = null;
   linkAtual: UsuarioSistemaDto | null = null;
+  linkEncurtado = signal<string | null>(null);
 
   constructor(
     private usuarioSistemaService: UsuarioSistemaService,
     private sistemaService: SistemaService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.linkAtual = {
@@ -40,26 +42,36 @@ export class ConfiguracaoComponent implements OnInit {
   }
 
   carregarLink() {
-    this.usuarioSistemaService.buscarPorId(this.sistemaSelecionadoId!).subscribe(res => {
+    this.usuarioSistemaService.buscarPorId(this.sistemasSelecionadoDto.sisNrId!).subscribe(res => {
       this.linkAtual = res;
+
+      this.montarLinkCurto(this.sistemasSelecionadoDto.sisTxNome);
     });
-    
+
+  }
+
+  montarLinkCurto(nomeSistema: string) {
+    const dominio = this.sistemaService.getDadosPorDominio();
+
+    const origem = `https://grupos.${nomeSistema}.com.br/ofertas?r=1`;
+
+    this.linkEncurtado.set(origem);
   }
 
   salvarLink() {
 
     const form: UsuarioSistemaForm = {
-      sisNrId: this.sistemaSelecionadoId!,
+      sisNrId: this.sistemasSelecionadoDto.sisNrId,
       ussTxLink: this.linkAtual!.ussTxLink,
       ussTxPixelFacebook: this.linkAtual?.ussTxPixelFacebook!
     };
 
-    if(!this.linkAtual?.ussNrId) { 
+    if (!this.linkAtual?.ussNrId) {
       this.usuarioSistemaService.salvar(form).subscribe(() => {
         alert('Link salvo com sucesso!');
       });
     } else {
-      this.usuarioSistemaService.atualizar( this.linkAtual.ussNrId, form).subscribe(() => {
+      this.usuarioSistemaService.atualizar(this.linkAtual.ussNrId, form).subscribe(() => {
         alert('Link atualizado com sucesso!');
       });
     }

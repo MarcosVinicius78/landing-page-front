@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -19,6 +19,9 @@ import { HoraDistribuicao } from './models/hora-distribuicao';
 import { ClickRegisterService } from '../../shared/service/click-register.service';
 import { DadosDashboardService } from './service/dados-dashboard.service';
 import { forkJoin } from 'rxjs';
+import { SistemaDto, SistemaService } from '../../shared/service/sistema.service';
+import { SistemaEnum } from '../pagina-captura/pagina-captura.component';
+import { TotalSistemasDto } from './models/total-sistemas';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,6 +32,13 @@ export type ChartOptions = {
   xaxis: ApexXAxis;
   fill: ApexFill;
   title: ApexTitleSubtitle;
+};
+
+export type ChartOptionsPizza = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
 };
 
 @Component({
@@ -42,13 +52,22 @@ export class DashboardComponent implements OnInit {
 
   readonly #dadosDashboardService = inject(DadosDashboardService);
   readonly #datePipe = inject(DatePipe);
+  readonly #sistemaService = inject(SistemaService)
 
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
 
+  @ViewChild("chartPizza") chartPizza!: ChartComponent;
+  public chartOptionsPizza!: Partial<ChartOptionsPizza>;
+
+  sistemasDto: SistemaDto[] = [];
+  sistemaSelecionado = signal<SistemaEnum | null>(SistemaEnum.SERGIPE_OFERTAS);
+  totalSistemasDto = signal<TotalSistemasDto[] | null>([]);
+  sistemas = Object.entries(SistemaEnum);
 
   filtros = {
     data: '',
+    dataFim: '',
     horaInicio: '00:00',
     horaFim: '00:00',
   };
@@ -56,6 +75,7 @@ export class DashboardComponent implements OnInit {
   totalPagina!: number;
   totalGrupo!: number;
   totalIntervalo!: number;
+  totalLinkEncurtado!: number;
   taxaRejeicao!: number;
 
   horasDistribuicao: HoraDistribuicao[] = [];
@@ -65,50 +85,90 @@ export class DashboardComponent implements OnInit {
     this.filtros.data = this.#datePipe.transform(new Date(), 'yyyy-MM-dd')!;
 
     this.aplicarFiltros();
-  } 
+  }
 
   aplicarFiltros() {
-    const { data, horaInicio, horaFim } = this.filtros;
+    const { data, dataFim ,horaInicio, horaFim } = this.filtros;
 
-    this.#buscarCliquesPorFaixa(data, horaInicio, horaFim);
-    this.#buscarTotais(data);
-    this.#buscarDistribuicaoPorHora(data);
+    this.#buscarDesempenhosSistemas(data);
+
+    this.#buscarCliquesPorFaixa(data, horaInicio, horaFim, this.sistemaSelecionado()!);
+    this.#buscarTotais(data, dataFim, this.sistemaSelecionado()!);
+    this.#buscarDistribuicaoPorHora(data, this.sistemaSelecionado()!);
+  }
+
+  #buscarDesempenhosSistemas(data: string) {
+    this.#dadosDashboardService.buscarDesempenhosSisemas(data).subscribe({
+      next: (res) => {
+        this.totalSistemasDto.set(res);
+        this.iniciarGraficoPizza();
+      }
+    })
   }
 
   #calcularTaxaRejeicao() {
     this.taxaRejeicao = ((this.totalPagina - this.totalGrupo) / this.totalPagina) * 100;
   }
 
-  #buscarCliquesPorFaixa(data: string, inicio: string, fim: string) {
-    this.#dadosDashboardService.getCliquesPorFaixa(data, inicio, fim).subscribe({
+  #buscarCliquesPorFaixa(data: string, inicio: string, fim: string, sistema: SistemaEnum) {
+    this.#dadosDashboardService.getCliquesPorFaixa(data, inicio, fim, sistema).subscribe({
       next: (res) => this.totalIntervalo = res.total
     });
   }
 
-  #buscarDistribuicaoPorHora(data: string) {
-    this.#dadosDashboardService.getCliquesPorHora(data).subscribe(response => {
+  #buscarDistribuicaoPorHora(data: string, sistema: SistemaEnum) {
+    this.#dadosDashboardService.getCliquesPorHora(data, sistema).subscribe(response => {
       this.horasDistribuicao = response;
 
-      const horas = this.horasDistribuicao.map(d => `${d.hora} Hora`);  // Convertendo as horas para o formato 'Hora 0', 'Hora 1', etc.
+      const horas = this.horasDistribuicao.map(d => `${d.hora}`);
       const totalCliques = this.horasDistribuicao.map(d => d.totalCliques); 1
       const totalAcessos = this.horasDistribuicao.map(d => d.totalAcessos); 1
       this.iniciarGrafico(horas, totalCliques, totalAcessos)
     });
   }
 
-  #buscarTotais(data: string) {
+  #buscarTotais(data: string, dataFim: string ,sistema: SistemaEnum) {
     forkJoin({
-      pagina: this.#dadosDashboardService.getTotalCliques(data, 'PAGINA'),
-      grupo: this.#dadosDashboardService.getTotalCliques(data, 'GRUPO')
-    }).subscribe(({ pagina, grupo }) => {
+      pagina: this.#dadosDashboardService.getTotalCliques(data, dataFim, 'PAGINA', sistema),
+      grupo: this.#dadosDashboardService.getTotalCliques(data, dataFim, 'GRUPO', sistema),
+      linkEncurtado: this.#dadosDashboardService.getTotalCliques(data, dataFim, 'ENCURTADO', sistema)
+    }).subscribe(({ pagina, grupo, linkEncurtado }) => {
       this.totalPagina = pagina.total
       this.totalGrupo = grupo.total;
+      this.totalLinkEncurtado = linkEncurtado.total;
       this.#calcularTaxaRejeicao();
     })
   }
 
   selecionarTab(tab: string) {
     this.tab = tab;
+  }
+
+  iniciarGraficoPizza() {
+    const dados = this.totalSistemasDto();
+    if (!dados) return;
+
+    this.chartOptionsPizza = {
+      series: dados.map(d => d.totalGrupo),
+      chart: {
+        width: 400,
+        type: "pie"
+      },
+      labels: dados.map(d => d.origem),
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
   }
 
   iniciarGrafico(horas: any, totalCliques: any, totalAcessos: any) {

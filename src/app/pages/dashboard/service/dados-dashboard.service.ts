@@ -5,6 +5,8 @@ import { HoraDistribuicao } from '../models/hora-distribuicao';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TotalCliquesDto } from '../models/total-cliques-dto';
 import { ComparacaoIntervaloDto } from '../models/comparacao-intervalo-dto';
+import { SistemaEnum } from '../../pagina-captura/pagina-captura.component';
+import { TotalSistemasDto } from '../models/total-sistemas';
 
 @Injectable({
   providedIn: 'root'
@@ -14,26 +16,37 @@ export class DadosDashboardService {
   private readonly apiUrl = environment.apiUrl.concat('/click');
   private readonly http = inject(HttpClient)
 
-  getTotalCliques(data: string, tipo: string): Observable<TotalCliquesDto> {
+  getTotalCliques(data: string, dataFim: string,tipo: string, sistema: SistemaEnum): Observable<TotalCliquesDto> {
     const params = new HttpParams()
       .set('data', data)
-      .set('tipo', tipo);
+      .set('dataFim', dataFim)
+      .set('tipo', tipo)
+      .set('sistema', sistema);
 
     return this.http.get<TotalCliquesDto>(`${this.apiUrl}/total`, { params });
   }
 
-  getCliquesPorFaixa(data: string, horaInicio: string, horaFim: string): Observable<TotalCliquesDto> {
+  getCliquesPorFaixa(data: string, horaInicio: string, horaFim: string, sistema: SistemaEnum): Observable<TotalCliquesDto> {
     const params = new HttpParams()
       .set('data', data)
       .set('inicio', horaInicio)
-      .set('fim', horaFim);
+      .set('fim', horaFim)
+      .set('sistema', sistema);
 
     return this.http.get<TotalCliquesDto>(`${this.apiUrl}/por-faixa`, { params });
   }
-
-  getCliquesPorHora(data: string): Observable<HoraDistribuicao[]> {
+  
+  buscarDesempenhosSisemas(data: string): Observable<TotalSistemasDto[]> {
     const params = new HttpParams()
       .set('data', data);
+
+    return this.http.get<TotalSistemasDto[]>(`${this.apiUrl}/desempenho-por-sistema`, { params });
+  }
+
+  getCliquesPorHora(data: string, sistema: SistemaEnum): Observable<HoraDistribuicao[]> {
+    const params = new HttpParams()
+      .set('data', data)
+      .set('sistema', sistema);
 
     return this.http.get<HoraDistribuicao[]>(`${this.apiUrl}/por-hora?`, { params });
   }

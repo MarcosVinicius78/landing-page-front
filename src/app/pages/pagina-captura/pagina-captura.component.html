@@ -1,7 +1,8 @@
 <div class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/fundo.png')] text-white flex flex-col items-center justify-start p-4 space-y-4">
 
     <h1 class="text-base font-bold text-center">
-        🔥 MELHORES PROMOÇÕES PARA O BRASIL 🔥
+        🔥 MELHORES PROMOÇÕES ESTÃO AQUI 🔥
+        <!-- 🔥 MELHORES PROMOÇÕES PARA {{ localidadeSistema() }} 🔥 -->
     </h1>
     <p class="text-xs text-center font-serif font-normal">CUPONS E OFERTAS DAS GRANDES LOJAS DO BRASIL</p>
 
@@ -27,7 +28,8 @@
     </div>
 
     <div class="text-center mt-4">
-        <h2 class="font-semibold font-serif text-base">Ofertas mais cupom tem Parceria Com</h2>
+        <h2 class="font-semibold font-serif text-base">Temos Parcerias de Promoções Com</h2>
+        <!-- <h2 class="font-semibold font-serif text-base">{{ sistemaNome() }} tem Parceria Com</h2> -->
         <div class="flex flex-wrap justify-center items-center gap-4 mt-2">
             <img src="assets/img/mercado.png" class="h-8 rounded-md" alt="Mercado Livre" />
             <img src="assets/img/magalu.png" class="h-8 rounded-md" alt="Magalu" />
@@ -40,6 +42,6 @@
     </div>
 
     <footer class="text-center font-serif text-xs text-white mt-6">
-        Direitos Reservados &#64;ofertasmaiscupom
+        Direitos Reservados &#64;{{ sistemaInstagram() }}
     </footer>
 </div>

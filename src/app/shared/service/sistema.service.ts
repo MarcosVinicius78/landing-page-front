@@ -36,9 +36,9 @@ export class SistemaService {
     } else if (dominio.includes('ofertasmaiscupons')) {
       return 'ofertasmaiscupons';
     } else if (dominio.includes('localhost')) {
-      return 'sergipeofertas';
-    }else if (dominio.includes('systemdevmv')) {
-      return 'sergipeofertas';
+      return 'ofertasmaiscupons';
+    }else if (dominio.includes('alagoasofertas')) {
+      return 'alagoasofertas';
     }
 
     return;

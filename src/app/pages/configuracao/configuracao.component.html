@@ -9,12 +9,12 @@
             Selecione o sistema:
         </label>
         <div class="relative">
-            <select id="sistemaSelect" [(ngModel)]="sistemaSelecionadoId" (change)="carregarLink()"
+            <select id="sistemaSelect" [(ngModel)]="sistemasSelecionadoDto" (change)="carregarLink()"
                 class="w-full appearance-none bg-gray-100 border border-gray-300 text-gray-800 p-3 pr-10 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option [ngValue]="null" disabled selected>Escolha uma opção</option>
 
                 @for (item of sistemasDto; track $index) {
-                <option [ngValue]="item.sisNrId">
+                <option [ngValue]="item">
                     {{ item.sisTxNome }}
                 </option>
                 }
@@ -41,11 +41,21 @@
         <label class="block text-gray-700 font-semibold mb-2">
             Pixel do Facebook:
         </label>
-        <textarea
+        <input
             class="w-full bg-gray-50 border border-gray-300 text-gray-800 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            type="text" [(ngModel)]="linkAtual!.ussTxPixelFacebook" placeholder="Ex: Informe o script" name="" id=""></textarea>
+            type="text" [(ngModel)]="linkAtual!.ussTxPixelFacebook" placeholder="Ex: Informe o pixel"/>
         <!-- <input type="text" [(ngModel)]="linkAtual!.ussTxLink" placeholder="Ex: 123456789012345"
             class="w-full bg-gray-50 border border-gray-300 text-gray-800 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" /> -->
+    </div>
+
+    <div class="mt-6">
+        <label class="block text-gray-700 font-semibold mb-2">
+            Link curto
+        </label>
+
+        <span>
+            {{ linkEncurtado() }}
+        </span>
     </div>
 
     <button (click)="salvarLink()"

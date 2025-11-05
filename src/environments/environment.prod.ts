@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://gruposomc.ofertasmaiscupons.com.br/api',
+  apiUrl: 'https://grupos.ofertasmaiscupons.com.br/api',
 };

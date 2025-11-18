@@ -1,0 +1,39 @@
+name: 'Build e Push para GHCR'
+
+on:
+  push:
+    tags:
+      - 'v[0-9].[0-9]+.[0-9]'
+
+env:
+  GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+  CONTAINER_IMAGE_NAME: ofertas/landing-page-front
+  USER_NAME: MarcosVinicius78
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure a tag git mais recente
+        run: |
+          RAW_TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${RAW_TAG#*@}"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "Versão: $VERSION"
+
+      - name: Build com Docker
+        run: |
+          docker build -t ghcr.io/${{ env.CONTAINER_NAME }}:latest .
+          docker build -t ghcr.io/${{ env.CONTAINER_NAME }}:${{ env.VERSION }} .
+
+      - name: Login no GitHub (GHCR)
+        run: echo $GHCR_TOKEN | docker login ghcr.io -u $USER_NAME --password-stdin
+
+      - name: Push no GitHub (GHCR)
+        run: |
+          docker push ghcr.io/${{ env.CONTAINER_NAME }}:latest
+          docker push ghcr.io/${{ env.CONTAINER_NAME }}:${{ env.VERSION }}

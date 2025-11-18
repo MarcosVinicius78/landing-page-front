@@ -65,16 +65,16 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
 
       if (dominio!.includes('sergipeofertas')) {
         this.titleService.setTitle('Grupos Sergipe');
-        this.sistemaNome.set("Sergipe Ofertas")
+        this.sistemaNome.set("PARA SERGIPE")
         this.sistemaInstagram.set("sergipe.ofertas")
         this.localidadeSistema.set("SERGIPE");
       } else if (dominio!.includes('ofertasmaiscupons')) {
         this.titleService.setTitle('Grupos Ofertas mais cupons');
-        this.sistemaNome.set("Ofertas Mais Cupons")
+        this.sistemaNome.set("DA INTERNET")
         this.sistemaInstagram.set("ofertasmaiscupom")
         this.localidadeSistema.set("O BRASIL");
       } else if (dominio!.includes('alagoasofertas')) {
-        this.sistemaNome.set("Alagoas Ofertas")
+        this.sistemaNome.set("PARA ALAGOAS")
         this.sistemaInstagram.set("alagoas.ofertas")
         this.titleService.setTitle('Grupos Alagoas');
         this.localidadeSistema.set("ALAGOAS");

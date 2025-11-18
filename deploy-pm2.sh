@@ -3,7 +3,7 @@
 # Configurações
 LOCAL_PROJECT_DIR="./"                      # Seu projeto Angular + Dockerfile
 REMOTE_USER="root"
-REMOTE_HOST="191.252.38.68"
+REMOTE_HOST="191.252.219.219"
 REMOTE_PROJECT_DIR="~/landing-page-front"
 DOCKER_IMAGE_NAME="landing-page-angular"
 DOCKER_CONTAINER_NAME="landing-page-container"

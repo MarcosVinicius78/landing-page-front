@@ -92,6 +92,8 @@ export class OfertasRedirectComponent implements OnInit {
         origem = SistemaEnum.OFERTAS_MAIS_CUPONS;
       } else if (dominio!.includes('alagoasofertas')) {
         origem = SistemaEnum.ALAGOAS_OFERTAS;
+      } else if (dominio!.includes('bahiaofertas')) {
+        origem = SistemaEnum.BAHIA_OFERTAS;
       }
      
       // Registra o acesso no backend com a origem correta

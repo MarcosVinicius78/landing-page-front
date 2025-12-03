@@ -1,32 +1,45 @@
-<!-- <div class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/fundo.png')] text-white flex flex-col items-center justify-start p-4 space-y-4">
+<div
+    class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/image.png')] text-white flex flex-col items-center justify-center p-4 space-y-4">
 
-    <h1 class="text-base font-bold text-center">
-        🔥 MELHORES PROMOÇÕES ESTÃO AQUI 🔥
-    </h1>
-    <p class="text-xs text-center font-serif font-normal">CUPONS E OFERTAS DAS GRANDES LOJAS DO BRASIL</p>
-
-    <div class="lg:w-[20%] w-[80%] rounded-2xl overflow-hidden shadow-lg">
-        <img src="assets/img/sergipe-promocao.jpg" alt="Promoção Sergipe" class="w-full object-cover" />
+    <div>
+        <h2 class="text-5xl font-extrabold text-center">Promoções</h2>
+        <div class="flex items-center">
+            <span class="text-5xl font-bold">para</span>
+            <h1 class="text-5xl ml-2 font-bold text-[#ff9f11] text-center">{{ sistemaNome() }}?</h1>
+        </div>
     </div>
 
-    <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''" target="_blank"
+    <div class="flex items-center gap-2">
+        <p class="text-4xl font-extrabold">Entre Agora</p>
+        <img class="w-20" src="assets/img/logo-whatsapp-png-transparente4.png" alt="wahtsapp">
+    </div>
+
+    <div class="flex items-center">
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta" >
+    </div>
+
+    <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''"
+        target="_blank"
         class="animate-pulseButton bg-[#68c632] hover:bg-green-600 text-white font-semibold py-6 px-6 rounded-2xl text-center w-full max-w-sm text-sm">
         PARTICIPAR DO GRUPO NO WHATSAPP
     </a>
 
-    <div class="flex items-center justify-center gap-2">
-        <img class="w-7 h-7 rounded-full" src="assets/img/seta.png" alt="Seta">
-        <p class="text-center font-serif text-sm">Economize com as nossas Notificações</p>
-        <img class="w-7 h-7 rounded-full" src="assets/img/seta.png" alt="Seta">
+    <div class="flex items-center justify-center">
+        <p class="text-center font-bold font-serif text-sm">Conexões Diretas Com</p>
     </div>
 
-    <div>
+    <!-- <div>
         <p class="font-bold text-2xl">{{ vagas }} Vagas Disponíveis</p>
-    </div>
+    </div> -->
 
-    <div class="text-center mt-4">
-        <h2 class="font-semibold font-serif text-base">Temos Parcerias de Promoções Com</h2>
-        <div class="flex flex-wrap justify-center items-center gap-4 mt-2">
+    <div class="text-center">
+        <!-- <h2 class="font-semibold font-serif text-base">Temos Parcerias de Promoções Com</h2> -->
+        <div class="flex flex-wrap justify-center items-center gap-4">
             <img src="assets/img/mercado.png" class="h-8 rounded-md" alt="Mercado Livre" />
             <img src="assets/img/magalu.png" class="h-8 rounded-md" alt="Magalu" />
             <img src="assets/img/amazon.png" class="h-8 rounded-md" alt="Amazon" />
@@ -38,16 +51,14 @@
     </div>
 
     <footer class="text-center font-serif text-xs text-white mt-6">
-        Direitos Reservados &#64;{{ sistemaInstagram() }}
+        &#64;{{ sistemaInstagram() }}
     </footer>
-</div> -->
-
+</div>
+<!-- 
 <div class="bg-black text-white font-sans">
-    <!-- Container principal -->
+
     <div class="w-full min-h-screen flex flex-col items-center relative overflow-hidden">
 
-
-        <!-- Top % Decor -->
         <div class="absolute top-0 left-0 w-40 rotate-12 opacity-90 -translate-y-1/2">
             <img src="/assets/img/percent-top.png" alt="decoracao" />
         </div>
@@ -58,36 +69,25 @@
 
 
         <div class="flex px-4 flex-col items-center justify-center h-screen">
-            <!-- Título -->
             <h2 class="text-2xl font-bold text-center">MELHORES PROMOÇÕES</h2>
             <div class="flex items-center justify-center">
-                <!-- <h1 class="text-3xl font-extrabold text-red-500 text-center">PARA</h1> -->
                 <h1 class="text-4xl ml-2 font-extrabold text-red-500 text-center">{{ sistemaNome() }}</h1>
             </div>
 
-
-            <!-- Logo Black Friday -->
             <div class="mt-10">
                 <img src="/assets/img/black-friday-logo.png" alt="Black Friday" class="w-56" />
             </div>
 
-
-            <!-- Subtexto -->
             <p class="text-center text-2xl mt-6 leading-tight">
                 <span class="text-red-500 font-semibold">Descontos de verdade</span>,<br />
                 poucas vagas disponíveis
             </p>
 
-
-            <!-- Botão principal -->
             <a (click)="registarClicksParaAcessarGrupo()"
                 [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''" target="_blank" class="mt-10">
-                <!-- <span>CLIQUE AQUI</span> -->
                 <img src="/assets/img/cliqueaqui.png" class="w-[19rem]" />
             </a>
 
-
-            <!-- Entre agora -->
             <div class="mt-10 border border-white/60 px-6 py-3 rounded-md flex items-center gap-3">
                 <img class="w-5" src="/assets/img/seta-para-cima.png" alt="decoracao" />
                 <span class="tracking-widest text-xl font-semibold">ENTRE AGORA</span>
@@ -95,8 +95,6 @@
             </div>
         </div>
 
-
-        <!-- Bottom % Decor -->
         <div class="absolute bottom-0 left-0 w-40 -rotate-12 opacity-90 translate-y-1/2">
             <img src="/assets/img/percent-bottom.png" alt="decoracao" />
         </div>
@@ -107,4 +105,4 @@
 
 
     </div>
-</div>
+</div> -->

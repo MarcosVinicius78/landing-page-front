@@ -39,6 +39,8 @@ export class SistemaService {
       return 'ofertasmaiscupons';
     }else if (dominio.includes('alagoasofertas')) {
       return 'alagoasofertas';
+    } else if (dominio.includes('bahiaofertas')) {
+      return 'bahiaofertas';
     }
 
     return;

@@ -17,6 +17,7 @@ const TIPO = {
 export enum SistemaEnum {
   SERGIPE_OFERTAS = "Sergipe Ofertas",
   ALAGOAS_OFERTAS = "Alagoas Ofertas",
+  BAHIA_OFERTAS = "Bahia Ofertas",
   OFERTAS_MAIS_CUPONS = "Ofertas mais cupons"
 }
 
@@ -65,19 +66,24 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
 
       if (dominio!.includes('sergipeofertas')) {
         this.titleService.setTitle('Grupos Sergipe');
-        this.sistemaNome.set("PARA SERGIPE")
+        this.sistemaNome.set("SERGIPE")
         this.sistemaInstagram.set("sergipe.ofertas")
         this.localidadeSistema.set("SERGIPE");
       } else if (dominio!.includes('ofertasmaiscupons')) {
         this.titleService.setTitle('Grupos Ofertas mais cupons');
-        this.sistemaNome.set("DA INTERNET")
+        this.sistemaNome.set("VOCÊ")
         this.sistemaInstagram.set("ofertasmaiscupom")
         this.localidadeSistema.set("O BRASIL");
       } else if (dominio!.includes('alagoasofertas')) {
-        this.sistemaNome.set("PARA ALAGOAS")
+        this.sistemaNome.set("ALAGOAS")
         this.sistemaInstagram.set("alagoas.ofertas")
         this.titleService.setTitle('Grupos Alagoas');
         this.localidadeSistema.set("ALAGOAS");
+      }else if (dominio!.includes('bahiaofertas')) {
+        this.sistemaNome.set("BAHIA")
+        this.sistemaInstagram.set("bahia.ofertas")
+        this.titleService.setTitle('Grupos bahia');
+        this.localidadeSistema.set("BAHIA");
       }
 
       this.carregarSistemaEDados();
@@ -125,6 +131,8 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         origem = SistemaEnum.OFERTAS_MAIS_CUPONS;
       } else if (dominio!.includes('alagoasofertas')) {
         origem = SistemaEnum.ALAGOAS_OFERTAS;
+      } else if (dominio!.includes('bahiaofertas')) {
+        origem = SistemaEnum.BAHIA_OFERTAS;
       }
 
       // Registra o acesso no backend com a origem correta
@@ -153,6 +161,8 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         origem = SistemaEnum.OFERTAS_MAIS_CUPONS;
       } else if (dominio!.includes('alagoasofertas')) {
         origem = SistemaEnum.ALAGOAS_OFERTAS;
+      } else if (dominio!.includes('bahiaofertas')) {
+        origem = SistemaEnum.BAHIA_OFERTAS;
       }
 
       // Registra no backend

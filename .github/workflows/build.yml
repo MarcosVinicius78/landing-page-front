@@ -6,8 +6,8 @@ on:
 env:
   GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
   CONTAINER_IMAGE_NAME: ofertas/landing-page-front
-  USER_NAME: marcosvinicius78
-  NAME_REPO: ofertas-landing
+  USER_NAME: MarcosVinicius78
+  NAME_REPO: marcosvinicius78
 
 jobs:
   build-and-push:

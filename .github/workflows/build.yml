@@ -25,6 +25,10 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
           echo "Versão: $VERSION"
 
+      - name: Docker Login GHCR
+        run: |
+          echo "${GHCR_TOKEN}" | docker login ghcr.io -u "${USER_NAME}" --password-stdin
+
       - name: Build com Docker
         run: |
           docker build -t ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:latest \

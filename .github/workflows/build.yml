@@ -35,5 +35,5 @@ jobs:
 
       - name: Push no GitHub (GHCR)
         run: |
-          docker push ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:latest
-          docker push ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:${VERSION}
+          docker push ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:latest
+          docker push ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:${VERSION}

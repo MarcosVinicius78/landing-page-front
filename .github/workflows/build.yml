@@ -31,10 +31,10 @@ jobs:
 
       - name: Build com Docker
         run: |
-          docker build -t ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:latest \
-                       -t ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:${VERSION} .
+          docker build -t ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:latest \
+                       -t ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:${VERSION} .
 
       - name: Push no GitHub (GHCR)
         run: |
-          docker push ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:latest
-          docker push ghcr.io/${USER_NAME}/${CONTAINER_IMAGE_NAME}:${VERSION}
+          docker push ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:latest
+          docker push ghcr.io/${NAME_REPO}/${CONTAINER_IMAGE_NAME}:${VERSION}

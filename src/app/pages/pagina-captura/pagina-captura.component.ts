@@ -81,7 +81,7 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         this.localidadeSistema.set("ALAGOAS");
       }else if (dominio!.includes('bahiaofertas')) {
         this.sistemaNome.set("BAHIA")
-        this.sistemaInstagram.set("bahia.ofertas")
+        this.sistemaInstagram.set("bahia.ofertas.br")
         this.titleService.setTitle('Grupos bahia');
         this.localidadeSistema.set("BAHIA");
       }

@@ -31,7 +31,7 @@ export class SistemaService {
       dominio = window.location.hostname;
     }
 
-    if (dominio.includes('c')) {
+    if (dominio.includes('sergipeofertas')) {
       return 'sergipeofertas';
     } else if (dominio.includes('ofertasmaiscupons')) {
       return 'ofertasmaiscupons';

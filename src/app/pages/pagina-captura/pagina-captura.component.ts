@@ -142,8 +142,8 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         if (usuarioSistema) {
           this.inserirPixelDoFacebook(usuarioSistema.ussTxPixelFacebook);
           this.usuarioSistemaDto.set(usuarioSistema);
-          this.carregarConfiguracoesLanding();
-          this.carregarImagem();
+          // this.carregarConfiguracoesLanding();
+          // this.carregarImagem();
         }
       });
   }

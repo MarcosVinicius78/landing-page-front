@@ -67,37 +67,37 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // if (isPlatformBrowser(this.platformId)) {
-    //   this.registrarAcessoNaPagina();
+    if (isPlatformBrowser(this.platformId)) {
+      // this.registrarAcessoNaPagina();
 
-    //   const dominio = this.sistemaService.getDadosPorDominio();
+      const dominio = this.sistemaService.getDadosPorDominio();
 
-    //   if (dominio!.includes('sergipeofertas')) {
-    //     this.titleService.setTitle('Grupos Sergipe');
-    //     this.sistemaNome.set("SERGIPE")
-    //     this.sistemaInstagram.set("sergipe.ofertas")
-    //     this.localidadeSistema.set("SERGIPE");
-    //   } else if (dominio!.includes('ofertasmaiscupons')) {
-    //     this.titleService.setTitle('Grupos Ofertas mais cupons');
-    //     this.sistemaNome.set("VOCÊ")
-    //     this.sistemaInstagram.set("ofertasmaiscupom")
-    //     this.localidadeSistema.set("O BRASIL");
-    //   } else if (dominio!.includes('alagoasofertas')) {
-    //     this.sistemaNome.set("ALAGOAS")
-    //     this.sistemaInstagram.set("alagoas.ofertas")
-    //     this.titleService.setTitle('Grupos Alagoas');
-    //     this.localidadeSistema.set("ALAGOAS");
-    //   } else if (dominio!.includes('bahiaofertas')) {
-    //     this.sistemaNome.set("BAHIA")
-    //     this.sistemaInstagram.set("bahia.ofertas.br")
-    //     this.titleService.setTitle('Grupos bahia');
-    //     this.localidadeSistema.set("BAHIA");
-    //   }
+      if (dominio!.includes('sergipeofertas')) {
+        // this.titleService.setTitle('Grupos Sergipe');
+        this.sistemaNome.set("SERGIPE")
+        this.sistemaInstagram.set("sergipe.ofertas")
+        this.localidadeSistema.set("SERGIPE");
+      } else if (dominio!.includes('ofertasmaiscupons')) {
+        // this.titleService.setTitle('Grupos Ofertas mais cupons');
+        this.sistemaNome.set("VOCÊ")
+        this.sistemaInstagram.set("ofertasmaiscupom")
+        this.localidadeSistema.set("O BRASIL");
+      } else if (dominio!.includes('alagoasofertas')) {
+        this.sistemaNome.set("ALAGOAS")
+        this.sistemaInstagram.set("alagoas.ofertas")
+        // this.titleService.setTitle('Grupos Alagoas');
+        this.localidadeSistema.set("ALAGOAS");
+      } else if (dominio!.includes('bahiaofertas')) {
+        this.sistemaNome.set("BAHIA")
+        this.sistemaInstagram.set("bahia.ofertas.br")
+        // this.titleService.setTitle('Grupos bahia');
+        this.localidadeSistema.set("BAHIA");
+      }
 
+      //   this.#carregarOuInicializarVagas();
+      //   this.#iniciarContador();
+    }
     this.carregarSistemaEDados();
-    //   this.#carregarOuInicializarVagas();
-    //   this.#iniciarContador();
-    // }
   }
 
   carregarConfiguracoesLanding() {

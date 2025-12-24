@@ -22,6 +22,7 @@ import { forkJoin } from 'rxjs';
 import { SistemaDto, SistemaService } from '../../shared/service/sistema.service';
 import { SistemaEnum } from '../pagina-captura/pagina-captura.component';
 import { TotalSistemasDto } from './models/total-sistemas';
+import { LandingSettingsComponent } from "../landing-settings.component/landing-settings.component";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -44,7 +45,7 @@ export type ChartOptionsPizza = {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, NgApexchartsModule, ConfiguracaoComponent, CommonModule],
+  imports: [FormsModule, NgApexchartsModule, ConfiguracaoComponent, CommonModule, LandingSettingsComponent],
   templateUrl: './dashboard.component.html',
   providers: [DatePipe]
 })

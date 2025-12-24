@@ -25,12 +25,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onLogin() {
-    if (this.formLogin.valid) {
-      console.log(this.formLogin.value);
-    }
-  }
-
   onSubmit() {
     if (this.formLogin.valid) {
       const loginData = this.formLogin.value;
@@ -44,6 +38,8 @@ export class LoginComponent implements OnInit {
           alert('Falha na autenticação!');
         }
       });
+    } else {
+      console.log('Formulário inválido');
     }
   }
 }

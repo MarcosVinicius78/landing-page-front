@@ -1,5 +1,5 @@
-import { Component, Inject, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { catchError, of, switchMap } from 'rxjs';
 import { ClickRegisterService } from '../../shared/service/click-register.service';
 import { SistemaDto, SistemaService } from '../../shared/service/sistema.service';
@@ -7,6 +7,9 @@ import { UsuarioSistemaDto } from '../../shared/service/usuario-sistema/models/u
 import { UsuarioSistemaService } from '../../shared/service/usuario-sistema/usuario-sistema.service';
 import { UsuarioInstagramEnum } from './models/usuario-instagram-enum';
 import { Title } from '@angular/platform-browser';
+import { DEFAULT_LANDING, LandingConfig } from '../landing-settings.component/model/landing-config.model';
+import { LandingService } from '../landing-settings.component/service/landing.service';
+import { ArquivoImagemService } from '../landing-settings.component/service/arquivoImagem.service';
 
 const TIPO = {
   PAGINA: "PAGINA",
@@ -24,8 +27,9 @@ export enum SistemaEnum {
 @Component({
   selector: 'app-pagina-captura',
   standalone: true,
-  imports: [],
-  templateUrl: './pagina-captura.component.html'
+  imports: [CommonModule],
+  templateUrl: './pagina-captura.component.html',
+  styleUrl: './pagina-captura.component.scss'
 })
 export class PaginaCapturaComponent implements OnInit, OnDestroy {
 
@@ -37,6 +41,10 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
   readonly EXPIRACAO_MS = 1000 * 60 * 60 * 24 * 2; // 2 dias
 
   private clickRegisterService = inject(ClickRegisterService);
+  readonly landingPageService = inject(LandingService);
+  readonly arquivoImagemService = inject(ArquivoImagemService);
+
+  imagemUrl: string | undefined;
 
   sisTemaDto = signal<SistemaDto | null>(null);
 
@@ -51,7 +59,7 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private sistemaService: SistemaService,
     private usuarioSistemaService: UsuarioSistemaService,
-    private titleService: Title
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnDestroy(): void {
@@ -59,37 +67,60 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.registrarAcessoNaPagina();
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.registrarAcessoNaPagina();
 
-      const dominio = this.sistemaService.getDadosPorDominio();
+    //   const dominio = this.sistemaService.getDadosPorDominio();
 
-      if (dominio!.includes('sergipeofertas')) {
-        this.titleService.setTitle('Grupos Sergipe');
-        this.sistemaNome.set("SERGIPE")
-        this.sistemaInstagram.set("sergipe.ofertas")
-        this.localidadeSistema.set("SERGIPE");
-      } else if (dominio!.includes('ofertasmaiscupons')) {
-        this.titleService.setTitle('Grupos Ofertas mais cupons');
-        this.sistemaNome.set("VOCÊ")
-        this.sistemaInstagram.set("ofertasmaiscupom")
-        this.localidadeSistema.set("O BRASIL");
-      } else if (dominio!.includes('alagoasofertas')) {
-        this.sistemaNome.set("ALAGOAS")
-        this.sistemaInstagram.set("alagoas.ofertas")
-        this.titleService.setTitle('Grupos Alagoas');
-        this.localidadeSistema.set("ALAGOAS");
-      }else if (dominio!.includes('bahiaofertas')) {
-        this.sistemaNome.set("BAHIA")
-        this.sistemaInstagram.set("bahia.ofertas.br")
-        this.titleService.setTitle('Grupos bahia');
-        this.localidadeSistema.set("BAHIA");
+    //   if (dominio!.includes('sergipeofertas')) {
+    //     this.titleService.setTitle('Grupos Sergipe');
+    //     this.sistemaNome.set("SERGIPE")
+    //     this.sistemaInstagram.set("sergipe.ofertas")
+    //     this.localidadeSistema.set("SERGIPE");
+    //   } else if (dominio!.includes('ofertasmaiscupons')) {
+    //     this.titleService.setTitle('Grupos Ofertas mais cupons');
+    //     this.sistemaNome.set("VOCÊ")
+    //     this.sistemaInstagram.set("ofertasmaiscupom")
+    //     this.localidadeSistema.set("O BRASIL");
+    //   } else if (dominio!.includes('alagoasofertas')) {
+    //     this.sistemaNome.set("ALAGOAS")
+    //     this.sistemaInstagram.set("alagoas.ofertas")
+    //     this.titleService.setTitle('Grupos Alagoas');
+    //     this.localidadeSistema.set("ALAGOAS");
+    //   } else if (dominio!.includes('bahiaofertas')) {
+    //     this.sistemaNome.set("BAHIA")
+    //     this.sistemaInstagram.set("bahia.ofertas.br")
+    //     this.titleService.setTitle('Grupos bahia');
+    //     this.localidadeSistema.set("BAHIA");
+    //   }
+
+    this.carregarSistemaEDados();
+    //   this.#carregarOuInicializarVagas();
+    //   this.#iniciarContador();
+    // }
+  }
+
+  carregarConfiguracoesLanding() {
+    this.landingPageService.buscarConfiguracaoPorIdSistema(this.sisTemaDto()?.sisNrId!).subscribe({
+      next: (data: any) => {
+        this.config = data;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar configuração da landing page:', err);
       }
+    });
+  }
 
-      this.carregarSistemaEDados();
-      this.#carregarOuInicializarVagas();
-      this.#iniciarContador();
-    }
+  carregarImagem() {
+    this.arquivoImagemService.buscarImagem(this.sisTemaDto()?.sisNrId!).subscribe({
+      next: (blob) => {
+        this.imagemUrl = URL.createObjectURL(blob);
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.imagemUrl = undefined;
+      }
+    });
   }
 
   carregarSistemaEDados(): void {
@@ -111,6 +142,8 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         if (usuarioSistema) {
           this.inserirPixelDoFacebook(usuarioSistema.ussTxPixelFacebook);
           this.usuarioSistemaDto.set(usuarioSistema);
+          this.carregarConfiguracoesLanding();
+          this.carregarImagem();
         }
       });
   }
@@ -255,4 +288,20 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
     document.body.appendChild(noScript);
   }
 
+  config: LandingConfig | null = DEFAULT_LANDING;
+
+  openUrl(url: string) {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open(url, '_self');
+    }
+  }
+
+  // helper para colocar estilo de background
+  getBackgroundStyle() {
+    if (!this.imagemUrl || !this.config) return {};
+    if (this.imagemUrl && this.config.backgroundType === 'IMAGE') {
+      return { 'background-image': `url(${this.imagemUrl})` };
+    }
+    return { 'background-color': this.config.backgroundValue };
+  }
 }

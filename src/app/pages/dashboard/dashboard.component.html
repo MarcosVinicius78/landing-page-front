@@ -13,6 +13,11 @@
         class="flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-gray-700 hover:bg-blue-100 transition-all duration-300">
         Configurar Links
       </button>
+     
+      <button (click)="selecionarTab('CONFIGUAR-PAGE')" [class.bg-blue-100]="tab === 'CONFIGUAR-PAGE'"
+        class="flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-gray-700 hover:bg-blue-100 transition-all duration-300">
+        Configurar Landing Page
+      </button>
     </nav>
   </div>
 </header>
@@ -129,4 +134,8 @@
 
 @if (tab.match('CONFIGURACAO')) {
 <app-configuracao></app-configuracao>
+}
+
+@if (tab.match('CONFIGUAR-PAGE')) {
+  <app-landing-settings></app-landing-settings>
 }

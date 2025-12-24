@@ -31,12 +31,12 @@ export class SistemaService {
       dominio = window.location.hostname;
     }
 
-    if (dominio.includes('sergipeofertas')) {
+    if (dominio.includes('c')) {
       return 'sergipeofertas';
     } else if (dominio.includes('ofertasmaiscupons')) {
       return 'ofertasmaiscupons';
     } else if (dominio.includes('localhost')) {
-      return 'ofertasmaiscupons';
+      return 'sergipeofertas';
     }else if (dominio.includes('alagoasofertas')) {
       return 'alagoasofertas';
     } else if (dominio.includes('bahiaofertas')) {

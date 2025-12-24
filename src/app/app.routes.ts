@@ -4,10 +4,12 @@ import { PaginaCapturaComponent } from './pages/pagina-captura/pagina-captura.co
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { OfertasRedirectComponent } from './pages/ofertas-redirect/ofertas-redirect.component';
+import { LandingSettingsComponent } from './pages/landing-settings.component/landing-settings.component';
 
 export const routes: Routes = [
     { path: '', component: PaginaCapturaComponent },
     { path: 'login-painel-administracao', component: LoginComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'landing-page-config', component: LandingSettingsComponent, canActivate: [AuthGuard] },
     { path: 'ofertas', component: OfertasRedirectComponent },
 ];

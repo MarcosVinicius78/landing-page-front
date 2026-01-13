@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ButtonConfig, DEFAULT_LANDING, LandingConfig } from './model/landing-config.model';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,11 +6,13 @@ import { LandingService } from './service/landing.service';
 import { SistemaDto, SistemaService } from '../../shared/service/sistema.service';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ArquivoImagemService } from './service/arquivoImagem.service';
+import { Observable, of, switchMap } from 'rxjs';
+import { ConfiguracoesLanding } from "./components/configuracoes-landing/configuracoes-landing";
 
 @Component({
   selector: 'app-landing-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, AngularEditorModule],
+  imports: [CommonModule, FormsModule, AngularEditorModule, ConfiguracoesLanding],
   templateUrl: './landing-settings.component.html',
   styleUrl: './landing-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,11 +23,12 @@ export class LandingSettingsComponent implements OnInit {
   readonly sistemaService = inject(SistemaService);
   readonly arquivoImagemService = inject(ArquivoImagemService);
 
-  config: LandingConfig = DEFAULT_LANDING;
+  config = signal<LandingConfig>(DEFAULT_LANDING);
 
   sistemasDto: SistemaDto[] = [];
   sistemasSelecionadoDto!: SistemaDto;
   arquivoSelecionado!: File;
+  sisNrIdSelecionado = signal<number | null>(null);
 
   editorConfig = {
     editable: true,
@@ -45,44 +48,51 @@ export class LandingSettingsComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) { }
   ngOnInit(): void {
-    this.carregarSistemas();
+    // this.carregarSistemas();
   }
 
-  sistemaEscolhido (){
-    this.carregarConfiguracoesLanding();
-    this.carregarImagem();
+  sistemaEscolhido() {
+    // this.carregarConfiguracoesLanding();
+    // this.carregarImagem();
   }
 
-  carregarConfiguracoesLanding() {
-    this.landingPageService.buscarConfiguracaoPorIdSistema(this.sistemasSelecionadoDto.sisNrId).subscribe({
-      next: (data: any) => {
-        this.config = data;
+  carregarConfiguracoesLanding(sisNrId: number | null) {
+    if (sisNrId === null) {
+      alert("Sistema não selecionado.");
+      return;
+    }
+
+    this.landingPageService.buscarConfiguracaoPorIdSistema(sisNrId).subscribe({
+      next: (data: LandingConfig) => {
+        this.config.set(data);
       },
       error: (err) => {
         console.error('Erro ao buscar configuração da landing page:', err);
       }
     });
+
+    this.carregarImagem(sisNrId)
   }
 
   onFileSelected(event: any) {
     this.arquivoSelecionado = event.target.files[0];
   }
 
-  enviarImagem() {
+  enviarImagem(): Observable<any> {
     if (!this.arquivoSelecionado) {
-      return;
+      return of(null);
     }
 
-    this.arquivoImagemService.uploadImagem(this.sistemasSelecionadoDto.sisNrId, this.arquivoSelecionado).subscribe({
-      next: () => console.log('Enviado com sucesso!'),
-      error: (err) => console.error(err),
-    });
+    return this.arquivoImagemService.uploadImagem(
+      this.sistemasSelecionadoDto.sisNrId,
+      this.arquivoSelecionado
+    );
   }
 
   imagemUrl: string | undefined;
 
-  carregarImagem() {
-    this.arquivoImagemService.buscarImagem(1).subscribe({
+  carregarImagem(sisNrId: number) {
+    this.arquivoImagemService.buscarImagem(sisNrId).subscribe({
       next: (blob) => {
         this.imagemUrl = URL.createObjectURL(blob);
         this.cdr.detectChanges();
@@ -109,42 +119,35 @@ export class LandingSettingsComponent implements OnInit {
 
   getBackgroundStyle() {
     if (!this.imagemUrl || !this.config) return {};
-    if (this.imagemUrl && this.config.backgroundType === 'IMAGE') {
+    if (this.imagemUrl && this.config().backgroundType === 'IMAGE') {
       return { 'background-image': `url(${this.imagemUrl})` };
     }
-    return { 'background-color': this.config.backgroundValue };
-  }
-
-  removeButton(_t48: number) {
-
+    return { 'background-color': this.config().backgroundValue };
   }
 
   addButton() {
-    this.config?.botoes.push({ bocTxDescricao: 'Novo Botão' });
+    this.config().botoes.push({ bocTxDescricao: 'Novo Botão' });
   }
 
-  salvarConfig() {
+  salvarConfig(): void {
+    const sisId = this.sistemasSelecionadoDto.sisNrId;
 
-    if (this.config.lacNrId) {
-      this.landingPageService.atualizarConfiguracao(this.sistemasSelecionadoDto.sisNrId, this.config).subscribe({
-        next: (data: LandingConfig) => {
-          alert('Configuração salva com sucesso:');
+    const request$ = this.config().lacNrId
+      ? this.landingPageService.atualizarConfiguracao(sisId, this.config())
+      : this.landingPageService.salvarConfiguracao(sisId, this.config());
+
+    request$
+      .pipe(
+        switchMap(() => this.enviarImagem())
+      )
+      .subscribe({
+        next: () => {
+          alert('Configuração salva com sucesso!');
         },
         error: (err) => {
           console.error('Erro ao salvar configuração da landing page:', err);
         }
       });
-      this.enviarImagem();
-    } else {
-      this.landingPageService.salvarConfiguracao(1, this.config).subscribe({
-        next: (data: LandingConfig) => {
-          alert('Configuração salva com sucesso:');
-        },
-        error: (err) => {
-          console.error('Erro ao salvar configuração da landing page:', err);
-        }
-      });
-      this.enviarImagem();
-    }
   }
+
 }

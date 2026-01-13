@@ -27,7 +27,7 @@ export const DEFAULT_LANDING: LandingConfig = {
     lacTxDescricao: 'Bem-vindo à nossa Landing Page!',
     lacBlAtivo: true,
     botoes: [
-        { bocNrId: 'b1', bocTxDescricao: 'Quero Participar', bocTxCor: '#fff', bocTxBackgroundColor: '#1976d2', bocTxAnimacao: 'pulse', bocTxUrl: '#' },
-        { bocNrId: 'b2', bocTxDescricao: 'Saber Mais', bocTxCor: '#1976d2', bocTxBackgroundColor: '#ffffff', bocTxAnimacao: 'none', bocTxUrl: '#' }
+        { bocTxDescricao: 'Quero Participar', bocTxCor: '#fff', bocTxBackgroundColor: '#1976d2', bocTxAnimacao: 'pulse', bocTxUrl: '#' },
+        { bocTxDescricao: 'Saber Mais', bocTxCor: '#1976d2', bocTxBackgroundColor: '#ffffff', bocTxAnimacao: 'none', bocTxUrl: '#' }
     ]
 };

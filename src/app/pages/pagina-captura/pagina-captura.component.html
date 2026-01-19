@@ -1,5 +1,5 @@
-<!-- @if (config?.lacBlAtivo) { -->
-<!-- <div class="w-full sm:bg-none shadow-xl overflow-hidden relative landing-root" [ngStyle]="getBackgroundStyle()">
+@if (config?.lacBlAtivo) {
+<div class="w-full sm:bg-none shadow-xl overflow-hidden relative landing-root" [ngStyle]="getBackgroundStyle()">
 
     <div class="relative z-10 p-6 text-center">
 
@@ -18,64 +18,61 @@
         </div>
 
     </div>
-</div> -->
-<!-- }
-@else {
-
-    
-    
-} -->
-<div
-    class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/image.png')] text-white flex flex-col items-center justify-center p-4 space-y-4">
-
-    <div>
-        <h2 class="text-5xl font-extrabold text-center">Promoções</h2>
-        <div class="flex items-center">
-            <span class="text-5xl font-bold">para</span>
-            <h1 class="text-5xl ml-2 font-bold text-[#ff9f11] text-center">{{ sistemaNome() }}?</h1>
-        </div>
-    </div>
-
-    <div class="flex items-center gap-2">
-        <p class="text-4xl font-extrabold">Entre Agora</p>
-        <img class="w-20" src="assets/img/logo-whatsapp-png-transparente4.png" alt="wahtsapp">
-    </div>
-
-    <div class="flex items-center">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-        <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
-    </div>
-
-    <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''"
-        target="_blank"
-        class="animate-pulseButton bg-[#68c632] hover:bg-green-600 text-white font-semibold py-6 px-6 rounded-2xl text-center w-full max-w-sm">
-        PARTICIPAR DO GRUPO NO WHATSAPP
-    </a>
-
-    <div class="flex items-center justify-center">
-        <p class="text-center font-bold font-serif text-sm">Conexões Diretas Com</p>
-    </div>
-
-    <div class="text-center">
-        <div class="flex flex-wrap justify-center items-center gap-4">
-            <img src="assets/img/mercado.png" class="h-8 rounded-md" alt="Mercado Livre" />
-            <img src="assets/img/magalu.png" class="h-8 rounded-md" alt="Magalu" />
-            <img src="assets/img/amazon.png" class="h-8 rounded-md" alt="Amazon" />
-            <img src="assets/img/shopee.png" class="h-8 rounded-md" alt="Shopee" />
-            <img src="assets/img/boti.png" class="h-8 rounded-md" alt="O Boticário" />
-            <img src="assets/img/nike.png" class="h-8 rounded-md" alt="Nike" />
-            <img src="assets/img/casas.png" class="h-8 rounded-md" alt="Casas Bahia" />
-        </div>
-    </div>
-
-    <footer class="text-center font-serif text-xs text-white mt-6">
-        &#64;{{ sistemaInstagram() }}
-    </footer>
 </div>
+}
+@else {
+    <div
+        class="min-h-screen bg-black sm:bg-none bg-[url('assets/img/image.png')] text-white flex flex-col items-center justify-center p-4 space-y-4">
+    
+        <div>
+            <h2 class="text-5xl font-extrabold text-center">Promoções</h2>
+            <div class="flex items-center">
+                <span class="text-5xl font-bold">para</span>
+                <h1 class="text-5xl ml-2 font-bold text-[#ff9f11] text-center">{{ sistemaNome() }}?</h1>
+            </div>
+        </div>
+    
+        <div class="flex items-center gap-2">
+            <p class="text-4xl font-extrabold">Entre Agora</p>
+            <img class="w-20" src="assets/img/logo-whatsapp-png-transparente4.png" alt="wahtsapp">
+        </div>
+    
+        <div class="flex items-center">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+            <img class="w-14" src="assets/img/seta-apontando.png" alt="seta">
+        </div>
+    
+        <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''"
+            target="_blank"
+            class="animate-pulseButton bg-[#68c632] hover:bg-green-600 text-white font-semibold py-6 px-6 rounded-2xl text-center w-full max-w-sm">
+            PARTICIPAR DO GRUPO NO WHATSAPP
+        </a>
+    
+        <div class="flex items-center justify-center">
+            <p class="text-center font-bold font-serif text-sm">Conexões Diretas Com</p>
+        </div>
+    
+        <div class="text-center">
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <img src="assets/img/mercado.png" class="h-8 rounded-md" alt="Mercado Livre" />
+                <img src="assets/img/magalu.png" class="h-8 rounded-md" alt="Magalu" />
+                <img src="assets/img/amazon.png" class="h-8 rounded-md" alt="Amazon" />
+                <img src="assets/img/shopee.png" class="h-8 rounded-md" alt="Shopee" />
+                <img src="assets/img/boti.png" class="h-8 rounded-md" alt="O Boticário" />
+                <img src="assets/img/nike.png" class="h-8 rounded-md" alt="Nike" />
+                <img src="assets/img/casas.png" class="h-8 rounded-md" alt="Casas Bahia" />
+            </div>
+        </div>
+    
+        <footer class="text-center font-serif text-xs text-white mt-6">
+            &#64;{{ sistemaInstagram() }}
+        </footer>
+    </div>
+}
 
 
 

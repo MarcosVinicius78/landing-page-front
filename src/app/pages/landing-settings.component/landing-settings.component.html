@@ -1,30 +1,6 @@
 <section class="flex justify-center p-8 gap-10">
-
-    <!-- PREVIEW DA LANDING PAGE -->
-    <div class="w-[26rem] rounded-2xl shadow-xl overflow-hidden border border-gray-200 relative landing-root"
-        [ngStyle]="getBackgroundStyle()">
-
-        <!-- Overlay opcional -->
-        <!-- <div class="absolute inset-0 bg-black/30" *ngIf="config!.overlayColor"></div> -->
-
-        <div class="relative z-10 p-6 text-center">
-
-            <h1 class="text-white text-2xl font-bold drop-shadow-lg" [innerHTML]="config().lacTxDescricao || ''">
-            </h1>
-
-            <div class="flex flex-col gap-3 mt-6">
-                <button *ngFor="let b of config().botoes"
-                    class="btn py-3 rounded-xl font-semibold shadow transition transform hover:scale-[1.03]"
-                    [ngClass]="b.bocTxAnimacao" [ngStyle]="{
-            'color': b.bocTxCor,
-            'background-color': b.bocTxBackgroundColor
-          }" (click)="openUrl(b.bocTxUrl || '#')">
-                    {{ b.bocTxDescricao }}
-                </button>
-            </div>
-
-        </div>
+    <div class="h-[750px]">
+        <app-visualizacao-landing [sisNrIdSelecionado]="sisNrIdSelecionado()"></app-visualizacao-landing>
     </div>
-
-    <app-configuracoes-landing [config]="config()" (sisNrIdSelecionado)="carregarConfiguracoesLanding($event)" ></app-configuracoes-landing>
+    <app-configuracoes-landing (configChange)="configChange($event)" [config]="config()!" (sisNrIdSelecionado)="carregarConfiguracoesLanding($event)" ></app-configuracoes-landing>
 </section>

@@ -1,0 +1,35 @@
+@if (config() == null) {
+  <div class="w-[26rem] h-full flex items-center justify-center rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+    <span class="text-gray-500 italic">Nenhuma configuração carregada.</span>
+  </div>
+} @else {
+  <div
+    class="w-[26rem] h-full flex items-center rounded-2xl shadow-xl overflow-hidden border border-gray-200 relative landing-root"
+    [ngStyle]="backgroundStyle()"
+  >
+
+    <div class="relative w-full z-10 p-6 text-center">
+
+      <h1
+        class="text-white text-2xl font-bold drop-shadow-lg"
+        [innerHTML]="config()!.lacTxDescricao || ''">
+      </h1>
+
+      <div class="flex w-full flex-col gap-3 mt-6">
+        <button
+          *ngFor="let b of config()!.botoes!"
+          class="btn w-full py-3 rounded-xl font-semibold shadow transition transform hover:scale-[1.03]"
+          [ngClass]="b.bocTxAnimacao"
+          [ngStyle]="{
+            'color': b.bocTxCor,
+            'background-color': b.bocTxBackgroundColor
+          }"
+          (click)="openUrl(b.bocTxUrl || '#')"
+        >
+          {{ b.bocTxDescricao }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

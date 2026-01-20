@@ -1,12 +1,12 @@
 @if (config?.lacBlAtivo) {
 <div class="w-full sm:bg-none shadow-xl overflow-hidden relative landing-root" [ngStyle]="getBackgroundStyle()">
 
-    <div class="relative z-10 p-6 text-center">
+    <div class="relative w-full z-10 p-6 text-center">
 
         <h1 class="text-white text-2xl font-bold drop-shadow-lg" [innerHTML]="config!.lacTxDescricao || ''">
         </h1>
 
-        <div class="flex flex-col gap-3 mt-6">
+        <div class="flex w-full flex-col gap-3 mt-6">
             <button *ngFor="let b of config!.botoes"
                 class="btn py-3 rounded-xl font-semibold shadow transition transform hover:scale-[1.03]"
                 [ngClass]="b.bocTxAnimacao" [ngStyle]="{

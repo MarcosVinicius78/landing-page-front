@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green: #00e676;
+  --green-dark: #00c853;
+  --gold: #FFD600;
+  --bg: #0a1a0f;
+  --card: #122a1a;
+  --text: #f0fff4;
+  --muted: #a5d6b0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Nunito", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, #00e67622 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, #00c85318 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 20%, #FFD60010 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}

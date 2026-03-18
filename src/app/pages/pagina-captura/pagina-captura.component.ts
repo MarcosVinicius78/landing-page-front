@@ -52,6 +52,7 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
   userInstagram = UsuarioInstagramEnum;
 
   sistemaNome = signal<string | null>(null);
+  sistemaDireitos = signal<string | null>(null);
   sistemaInstagram = signal<string | null>(null);
   localidadeSistema = signal<string | null>(null);
 
@@ -74,22 +75,25 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
 
       if (dominio!.includes('sergipeofertas')) {
         // this.titleService.setTitle('Grupos Sergipe');
-        this.sistemaNome.set("SERGIPE")
+        this.sistemaNome.set("SERGIPE OFERTAS")
         this.sistemaInstagram.set("sergipe.ofertas")
         this.localidadeSistema.set("SERGIPE");
+        this.sistemaDireitos.set("Sergipe Ofertas");
       } else if (dominio!.includes('ofertasmaiscupons')) {
         // this.titleService.setTitle('Grupos Ofertas mais cupons');
         this.sistemaNome.set("VOCÊ")
         this.sistemaInstagram.set("ofertasmaiscupom")
         this.localidadeSistema.set("O BRASIL");
       } else if (dominio!.includes('alagoasofertas')) {
-        this.sistemaNome.set("ALAGOAS")
+        this.sistemaNome.set("ALAGOAS OFERTAS")
         this.sistemaInstagram.set("alagoas.ofertas")
+        this.sistemaDireitos.set("Alagoas Ofertas");
         // this.titleService.setTitle('Grupos Alagoas');
         this.localidadeSistema.set("ALAGOAS");
       } else if (dominio!.includes('bahiaofertas')) {
-        this.sistemaNome.set("BAHIA")
+        this.sistemaNome.set("BAHIA OFERTAS")
         this.sistemaInstagram.set("bahia.ofertas.br")
+        this.sistemaDireitos.set("Bahia Ofertas");
         // this.titleService.setTitle('Grupos bahia');
         this.localidadeSistema.set("BAHIA");
       }
@@ -259,7 +263,7 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
     script.innerHTML = `
     !function(f,b,e,v,n,t,s) {
       if(f.fbq) return;
-      n=f.fbq=function(){n.callMethod ? 
+      n=f.fbq=function(){n.callMethod ?
         n.callMethod.apply(n,arguments) : n.queue.push(arguments)};
       if(!f._fbq) f._fbq=n;
       n.push=n;

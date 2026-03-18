@@ -77,7 +77,7 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         // this.titleService.setTitle('Grupos Sergipe');
         this.sistemaNome.set("SERGIPE OFERTAS")
         this.sistemaInstagram.set("sergipe.ofertas")
-        this.localidadeSistema.set("SERGIPE");
+        this.localidadeSistema.set("de Sergipe");
         this.sistemaDireitos.set("Sergipe Ofertas");
       } else if (dominio!.includes('ofertasmaiscupons')) {
         // this.titleService.setTitle('Grupos Ofertas mais cupons');
@@ -89,13 +89,13 @@ export class PaginaCapturaComponent implements OnInit, OnDestroy {
         this.sistemaInstagram.set("alagoas.ofertas")
         this.sistemaDireitos.set("Alagoas Ofertas");
         // this.titleService.setTitle('Grupos Alagoas');
-        this.localidadeSistema.set("ALAGOAS");
+        this.localidadeSistema.set("de Alagoas");
       } else if (dominio!.includes('bahiaofertas')) {
         this.sistemaNome.set("BAHIA OFERTAS")
         this.sistemaInstagram.set("bahia.ofertas.br")
         this.sistemaDireitos.set("Bahia Ofertas");
         // this.titleService.setTitle('Grupos bahia');
-        this.localidadeSistema.set("BAHIA");
+        this.localidadeSistema.set("da Bahia");
       }
 
       //   this.#carregarOuInicializarVagas();

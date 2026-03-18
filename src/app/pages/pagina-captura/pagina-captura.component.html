@@ -119,7 +119,7 @@
     <div class="member-count">+150.000</div>
     <div class="member-label">membros ativos no grupo</div>
     <div class="stars">⭐⭐⭐⭐⭐</div>
-    <p style="font-size:13px;color:var(--muted);font-weight:600;">"O melhor grupo de ofertas da Bahia!"</p>
+    <p style="font-size:13px;color:var(--muted);font-weight:600;">"O melhor grupo de ofertas {{ localidadeSistema() }}!"</p>
   </div>
   <div class="cta-wrap">
     <a (click)="registarClicksParaAcessarGrupo()" [href]="usuarioSistemaDto() ? usuarioSistemaDto()?.ussTxLink : ''" class="cta-btn">

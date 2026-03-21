@@ -1,21 +1,24 @@
-# Etapa 1: Build do Angular
+# Etapa 1: Build Angular
 FROM node:18 as build-stage
 
 WORKDIR /app
 COPY . .
 
-# Adiciona o --legacy-peer-deps aqui 👇
 RUN npm install --legacy-peer-deps
-RUN npm run build --prod
+RUN npm run build
 
-# Etapa 2: Executar com PM2 + http-server
-FROM node:18
+# Etapa 2: Nginx (produção)
+FROM nginx:alpine
 
-RUN npm install -g http-server pm2
+# Remove arquivos padrão
+RUN rm -rf /usr/share/nginx/html/*
 
-WORKDIR /app
-COPY --from=build-stage /app/dist/landing-page-ofertas/browser/ ./dist
+# Copia build Angular
+COPY --from=build-stage /app/dist/landing-page-ofertas/browser /usr/share/nginx/html
 
-EXPOSE 3000
+# Configuração nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["pm2-runtime", "start", "http-server", "--", "dist", "-p", "3000"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

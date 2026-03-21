@@ -72,9 +72,9 @@ export class OfertasRedirectComponent implements OnInit {
       )
       .subscribe((usuarioSistema) => {
         if (usuarioSistema) {
-          this.inserirPixelDoFacebook(usuarioSistema.ussTxPixelFacebook);
+          // this.inserirPixelDoFacebook(usuarioSistema.ussTxPixelFacebook);
           this.usuarioSistemaDto.set(usuarioSistema);
-          this.registrarAcessoNaPagina();
+          // this.registrarAcessoNaPagina();
           this.redirecionarLink();
         }
       });
@@ -95,13 +95,13 @@ export class OfertasRedirectComponent implements OnInit {
       } else if (dominio!.includes('bahiaofertas')) {
         origem = SistemaEnum.BAHIA_OFERTAS;
       }
-     
+
       // Registra o acesso no backend com a origem correta
       this.registrar(TIPO.ENCURTADO, origem);
     }
   }
 
-   registrar(tipo: string, origem: string) {
+  registrar(tipo: string, origem: string) {
     this.clickRegisterService.registrarClique(tipo, origem).subscribe({
       next: () => {
       }
@@ -118,7 +118,7 @@ export class OfertasRedirectComponent implements OnInit {
     script.innerHTML = `
     !function(f,b,e,v,n,t,s) {
       if(f.fbq) return;
-      n=f.fbq=function(){n.callMethod ? 
+      n=f.fbq=function(){n.callMethod ?
         n.callMethod.apply(n,arguments) : n.queue.push(arguments)};
       if(!f._fbq) f._fbq=n;
       n.push=n;
